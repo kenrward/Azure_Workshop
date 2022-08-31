@@ -10,6 +10,18 @@ variable "domain" {
   description   = "Domain name (for example: contoso.onmicrosoft.com)"
 }
 
+variable "start_ip_address" {
+  type          = string
+  description   = "Your starting IP address for SQLFirewallRule"
+}
+
+
+variable "end_ip_address" {
+  type          = string
+  description   = "Your ending IP address for SQLFirewallRule"
+}
+
+
 variable "user_name1" {
   type          = string
   default       = "chris.green"
@@ -248,8 +260,8 @@ resource "azurerm_mssql_server" "AzureSQLServer" {
 resource "azurerm_mssql_firewall_rule" "SQLFirewallRule" {
   name                = "AlllowAzureServices"
   server_id           = azurerm_mssql_server.AzureSQLServer.id
-  start_ip_address    = "X.X.X.X"
-  end_ip_address      = "X.X.X.X"
+  start_ip_address    = var.start_ip_address
+  end_ip_address      = var.end_ip_address
 }
 
 resource "azurerm_mssql_database" "AzureSQLDB" {
